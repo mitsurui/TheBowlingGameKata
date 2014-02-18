@@ -1,3 +1,5 @@
+import groovy.transform.Canonical
+import groovy.transform.EqualsAndHashCode
 import groovy.transform.TupleConstructor
 
 class World {
@@ -18,16 +20,23 @@ class World {
 }
 
 @TupleConstructor(includeFields = true)
+@EqualsAndHashCode(includeFields = true)
+@Canonical
 class Cell {
   private int x;
   private int y;
 
-  def listOfNeighbours() {
-    Cell neighbour = new Cell(x - 1, y -1);
-//
- //j  def cellNeighbours = []
-    def listOfCellNeigbours = [neighbour, neighbour, neighbour, neighbour, neighbour, neighbour, neighbour, neighbour];
-    return listOfCellNeigbours;
+  def listNeighbours() {
+    def cellNeighbours = [];
+    cellNeighbours.add(new Cell(x-1, y-1));
+    cellNeighbours.add(new Cell(x-1, y));
+    cellNeighbours.add(new Cell(x, y-1));
+    cellNeighbours.add(new Cell(x+1, y+1));
+    cellNeighbours.add(new Cell(x+1, 0));
+    cellNeighbours.add(new Cell(x, y+1));
+    cellNeighbours.add(new Cell(x-1, y+1));
+    cellNeighbours.add(new Cell(x+1, y-1));
+    return cellNeighbours;
   }
 
 }

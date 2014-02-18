@@ -1,4 +1,5 @@
 import spock.lang.*
+import sun.util.resources.CurrencyNames_et_EE
 
 //Any live cell with fewer than two live neighbours dies, as if caused by under-population.
 //Any live cell with two or three live neighbours lives on to the next generation.
@@ -46,17 +47,21 @@ class TestGameOfLife extends Specification {
   void "testCellHasEightNeighbours"() {
     Cell cell = new Cell(9,2);
     expect:
-      cell.listOfNeighbours().size() == 8;
+      cell.listNeighbours().size() == 8;
   }
-  @Ignore
+
   void "testCellShouldKnowItsNeighbours"() {
     Cell cell = new Cell(0,0);
-    def listOfNeighbours = [];
-    listOfNeighbours = cell.neighbours();
+    def listOfNeighbours = cell.listNeighbours();
     expect:
-      listOfNeighbours.each {
-        false;
-      }
+      listOfNeighbours[0] == new Cell(-1,-1);
+      listOfNeighbours[1] == new Cell(-1, 0);
+      listOfNeighbours[2] == new Cell(0, -1);
+      listOfNeighbours[3] == new Cell(1, 1);
+      listOfNeighbours[4] == new Cell(1, 0);
+      listOfNeighbours[5] == new Cell(0, 1);
+      listOfNeighbours[6] == new Cell(-1, 1);
+      listOfNeighbours[7] == new Cell(1, -1);
   }
 
   @Ignore
