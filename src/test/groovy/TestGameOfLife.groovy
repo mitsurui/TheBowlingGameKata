@@ -6,28 +6,34 @@ import spock.lang.*
 //Any dead cell with exactly three live neighbours becomes a live cell, as if by reproduction.
 
 class TestGameOfLife extends Specification {
+  World world;
+
+  def setup() {
+    world = new World();
+  }
   def "testWorldGivesCellLifeIsAlive"() {
-    Cell cell = new Cell();
-    World world = new World();
+    Cell cell = new Cell(0,0);
     world.giveCellLife(cell);
     expect:
       world.isCellAlive(cell) == true;
   }
 
   def "testOnlyCellsThatHaveBeenGiveLifeShouldBeAlive"(){
-    Cell cell = new Cell();
-    Cell anotherCell = new Cell();
-    World world = new World();
+    Cell cell = new Cell(9,0);
+    Cell anotherCell = new Cell(4,3);
     world.giveCellLife(cell);
     expect:
+      world.isCellAlive(cell) == true;
       world.isCellAlive(anotherCell) == false;
   }
-  @Ignore
-  def "testCellWithOneLiveNeighbourDiesOnNextTick"() {
-    World world = new World();
-    Cell cell = new Cell();
+
+  def "testLiveCellWithOneLiveNeighbourDiesOnNextTick"() {
+    Cell cell = new Cell(0,0);
+    Cell neighborCell = new Cell(1,0);
     world.giveCellLife(cell);
+    world.giveCellLife(neighborCell);
     expect:
-      false;
-  } 
+    world.tick().isCellAlive(cell) == false;
+  }
+
 }
