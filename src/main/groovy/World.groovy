@@ -22,6 +22,17 @@ class World {
       }
       if (count == 2 || count == 3) worldOnNextTick.giveCellLife(it);
     }
+    setOfLiveCells.each {
+      it.neighbours().each {
+        if(isCellAlive(it) == false){
+          int count = 0;
+          it.neighbours().each {
+            if(isCellAlive(it)) count++;
+          }
+          if(count == 3) worldOnNextTick.giveCellLife(it);
+        }
+      }
+    }
     return worldOnNextTick;
   }
 
