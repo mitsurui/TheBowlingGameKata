@@ -79,4 +79,14 @@ class TestGameOfLife extends Specification {
     expect:
       world.tick().isCellAlive(cell) == true;
   }
+
+  void "testLiveCellWithMoreThanThreeLiveNeighboursDiesOnNextTick"() {
+    world.giveCellLife(cell);
+    world.giveCellLife(cell.neighbours()[1]);
+    world.giveCellLife(cell.neighbours()[2]);
+    world.giveCellLife(cell.neighbours()[3]);
+    world.giveCellLife(cell.neighbours()[4]);
+    expect:
+      world.tick().isCellAlive(cell) == false;
+  }
 }
