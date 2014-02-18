@@ -14,7 +14,15 @@ class World {
   }
 
   World tick(){
-    return new World();
+    World worldOnNextTick = new World();
+    setOfLiveCells.each {
+      int count = 0;
+      it.neighbours().each {
+        if(isCellAlive(it)) count++;
+      }
+      if (count == 2 || count == 3) worldOnNextTick.giveCellLife(it);
+    }
+    return worldOnNextTick;
   }
 
 }
@@ -26,7 +34,7 @@ class Cell {
   private int x;
   private int y;
 
-  def listNeighbours() {
+  def neighbours() {
     def cellNeighbours = [];
     cellNeighbours.add(new Cell(x-1, y-1));
     cellNeighbours.add(new Cell(x-1, y));

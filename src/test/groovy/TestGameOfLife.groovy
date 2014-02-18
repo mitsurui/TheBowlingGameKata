@@ -1,5 +1,4 @@
 import spock.lang.*
-import sun.util.resources.CurrencyNames_et_EE
 
 //Any live cell with fewer than two live neighbours dies, as if caused by under-population.
 //Any live cell with two or three live neighbours lives on to the next generation.
@@ -47,12 +46,12 @@ class TestGameOfLife extends Specification {
   void "testCellHasEightNeighbours"() {
     Cell cell = new Cell(9,2);
     expect:
-      cell.listNeighbours().size() == 8;
+      cell.neighbours().size() == 8;
   }
 
   void "testCellShouldKnowItsNeighbours"() {
     Cell cell = new Cell(0,0);
-    def listOfNeighbours = cell.listNeighbours();
+    def listOfNeighbours = cell.neighbours();
     expect:
       listOfNeighbours[0] == new Cell(-1,-1);
       listOfNeighbours[1] == new Cell(-1, 0);
@@ -64,7 +63,6 @@ class TestGameOfLife extends Specification {
       listOfNeighbours[7] == new Cell(1, -1);
   }
 
-  @Ignore
   void "testLiveCellWithTwoNeighboursLivesOnNexTick"() {
     Cell cell = new Cell(1,1);
     Cell neighbour = new Cell(0,1);
@@ -72,6 +70,16 @@ class TestGameOfLife extends Specification {
     world.giveCellLife(cell);
     world.giveCellLife(neighbour);
     world.giveCellLife(anotherNeighbour);
+    expect:
+      world.tick().isCellAlive(cell) == true;
+  }
+
+  void "testLiveCellWithThreeLiveNeighboursLivesOnNextTick"() {
+    Cell cell = new Cell(0,0);
+    world.giveCellLife(cell);
+    world.giveCellLife(cell.neighbours()[1]);
+    world.giveCellLife(cell.neighbours()[2]);
+    world.giveCellLife(cell.neighbours()[3]);
     expect:
       world.tick().isCellAlive(cell) == true;
   }
