@@ -13,29 +13,36 @@ class World {
    return setOfLiveCells.contains(cell);
   }
 
-  World tick(){
-    World worldOnNextTick = new World();
+  private void giveLifeToLiveCellsThatHaveTwoOrThreeLiveNeighbours(World worldOnNextTick) {
     setOfLiveCells.each {
       int count = 0;
       it.neighbours().each {
-        if(isCellAlive(it)) count++;
+        if (isCellAlive(it)) count++;
       }
       if (count == 2 || count == 3) worldOnNextTick.giveCellLife(it);
     }
+  }
+
+  private void giveLifeToDeadCellsThatHaveThreeLiveNeighbours(World worldOnNextTick) {
     setOfLiveCells.each {
       it.neighbours().each {
-        if(isCellAlive(it) == false){
+        if (isCellAlive(it) == false) {
           int count = 0;
           it.neighbours().each {
-            if(isCellAlive(it)) count++;
+            if (isCellAlive(it)) count++;
           }
-          if(count == 3) worldOnNextTick.giveCellLife(it);
+          if (count == 3) worldOnNextTick.giveCellLife(it);
         }
       }
     }
-    return worldOnNextTick;
   }
 
+  World tick(){
+    World worldOnNextTick = new World();
+    giveLifeToLiveCellsThatHaveTwoOrThreeLiveNeighbours(worldOnNextTick);
+    giveLifeToDeadCellsThatHaveThreeLiveNeighbours(worldOnNextTick);
+    return worldOnNextTick;
+  }
 }
 
 @TupleConstructor(includeFields = true)
