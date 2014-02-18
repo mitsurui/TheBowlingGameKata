@@ -7,19 +7,19 @@ import spock.lang.*
 
 class TestGameOfLife extends Specification {
   World world;
+  Cell cell;
 
   def setup() {
     world = new World();
+    cell = new Cell(5,9);
   }
   def "testWorldGivesCellLifeIsAlive"() {
-    Cell cell = new Cell(0,0);
     world.giveCellLife(cell);
     expect:
       world.isCellAlive(cell) == true;
   }
 
   def "testOnlyCellsThatHaveBeenGiveLifeShouldBeAlive"(){
-    Cell cell = new Cell(9,0);
     Cell anotherCell = new Cell(4,3);
     world.giveCellLife(cell);
     expect:
@@ -28,23 +28,19 @@ class TestGameOfLife extends Specification {
   }
 
   def "testLiveCellWithOneLiveNeighbourDiesOnNextTick"() {
-    Cell cell = new Cell(0,0);
-    Cell neighborCell = new Cell(1,0);
     world.giveCellLife(cell);
-    world.giveCellLife(neighborCell);
+    world.giveCellLife(cell.neighbours()[2]);
     expect:
     world.tick().isCellAlive(cell) == false;
   }
 
   void "testLiveCellWithZeroLiveNeighboursDiesOnNextTick"() {
-    Cell cell = new Cell(3,4);
     world.giveCellLife(cell);
     expect:
       world.tick().isCellAlive(cell) == false;
   }
 
   void "testCellHasEightNeighbours"() {
-    Cell cell = new Cell(9,2);
     expect:
       cell.neighbours().size() == 8;
   }
