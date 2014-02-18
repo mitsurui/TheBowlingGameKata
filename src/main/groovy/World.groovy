@@ -21,4 +21,13 @@ class World {
 class Cell {
   private int x;
   private int y;
+
+  def listOfNeighbours() {
+    Cell neighbour = new Cell(x - 1, y -1);
+//
+ //j  def cellNeighbours = []
+    def listOfCellNeigbours = [neighbour, neighbour, neighbour, neighbour, neighbour, neighbour, neighbour, neighbour];
+    return listOfCellNeigbours;
+  }
+
 }

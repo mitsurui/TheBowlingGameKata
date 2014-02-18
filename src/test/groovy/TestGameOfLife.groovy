@@ -42,4 +42,32 @@ class TestGameOfLife extends Specification {
     expect:
       world.tick().isCellAlive(cell) == false;
   }
+
+  void "testCellHasEightNeighbours"() {
+    Cell cell = new Cell(9,2);
+    expect:
+      cell.listOfNeighbours().size() == 8;
+  }
+  @Ignore
+  void "testCellShouldKnowItsNeighbours"() {
+    Cell cell = new Cell(0,0);
+    def listOfNeighbours = [];
+    listOfNeighbours = cell.neighbours();
+    expect:
+      listOfNeighbours.each {
+        false;
+      }
+  }
+
+  @Ignore
+  void "testLiveCellWithTwoNeighboursLivesOnNexTick"() {
+    Cell cell = new Cell(1,1);
+    Cell neighbour = new Cell(0,1);
+    Cell anotherNeighbour = new Cell(2,2);
+    world.giveCellLife(cell);
+    world.giveCellLife(neighbour);
+    world.giveCellLife(anotherNeighbour);
+    expect:
+      world.tick().isCellAlive(cell) == true;
+  }
 }
