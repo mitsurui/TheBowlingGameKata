@@ -1,10 +1,12 @@
 class World {
+  private def setOfLiveCells = [] as Set;
   void giveCellLife(Cell cell){
-
+    setOfLiveCells.add(cell);
   }
 
   boolean isCellAlive(Cell cell){
-    return true;
+
+   return setOfLiveCells.contains(cell);
   }
 
 

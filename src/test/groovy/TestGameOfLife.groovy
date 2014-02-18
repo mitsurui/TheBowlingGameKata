@@ -13,6 +13,15 @@ class TestGameOfLife extends Specification {
     expect:
       world.isCellAlive(cell) == true;
   }
+
+  def "testOnlyCellsThatHaveBeenGiveLifeShouldBeAlive"(){
+    Cell cell = new Cell();
+    Cell anotherCell = new Cell();
+    World world = new World();
+    world.giveCellLife(cell);
+    expect:
+      world.isCellAlive(anotherCell) == false;
+  }
   @Ignore
   def "testCellWithOneLiveNeighbourDiesOnNextTick"() {
     World world = new World();
