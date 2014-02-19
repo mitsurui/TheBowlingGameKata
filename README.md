@@ -15,4 +15,4 @@ Compile
 Run Test
 ========
 
-`gradle test`
+`$ gradle test`
