@@ -3,21 +3,18 @@ groovyKata
 
 My coding exercises in Groovy.
 
-Pre-requisties
-==============
-Gradle - http://www.gradle.org/
-
 Compile
 =======
-`$ gradle compileGroovy`
+`$ gradlew compileGroovy`
 
 Run Test
 ========
-`$ gradle test`
+`$ gradlew test`
 
 IntelliJ IDEA
 =============
 If you are using IntelliJ IDEA, run
-`$ gradle idea`
+
+`$ gradlew idea`
 
 and execute the resulting generated *.ipr file.
