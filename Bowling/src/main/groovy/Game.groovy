@@ -1,14 +1,51 @@
 class Game{
- void roll(int pins){
- 
- 
- 
- } 
- 
- int score(){
-   
-    0
+
+  int[] rolls = new int[21]
+  int currentRoll = 0
+
+  void roll(int pins){
+    rolls[currentRoll++] = pins
   }
-  
+
+  int score(){
+    int score = 0
+    int frameIndex = 0
+
+    (0..<10).each{
+      if (isStrike(frameIndex)) {
+        score += 10 + strikeBonus(frameIndex)
+        frameIndex++
+      }
+      else if (isSpare(frameIndex)) {
+        score += 10 + spareBonus(frameIndex)
+        frameIndex += 2
+      }
+      else {
+        score += sumOfBallsInFrame(frameIndex)
+        frameIndex += 2
+      }
+    }
+    return score
+  }
+
+  private boolean isStrike(int frameIndex) {
+    return rolls[frameIndex] == 10
+  }
+
+  private boolean isSpare(int frameIndex) {
+    return rolls[frameIndex] + rolls[frameIndex + 1] == 10
+  }
+
+  private int sumOfBallsInFrame(int frameIndex) {
+    return rolls[frameIndex] + rolls[frameIndex + 1]
+  }
+
+  private int spareBonus(int frameIndex) {
+    return rolls[frameIndex + 2]
+  }
+
+  private int strikeBonus(int frameIndex) {
+    return rolls[frameIndex + 1] + rolls[frameIndex + 2]
+  }
   
 }
